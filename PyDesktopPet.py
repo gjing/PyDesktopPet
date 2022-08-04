@@ -158,28 +158,33 @@ if __name__ == "__main__":
     animation_canvas = create_animation_canvas(animation_window)
     pets = get_pets()
 
+    m = tk.Menu(animation_window, tearoff=0)
+    animation_menu = tk.Menu()
+    for a in animation_list:
+        animation_menu.add_command(label=a, command=lambda anim = a: reset_animation(anim))
+    pet_menu = tk.Menu()
+    for p in pets:
+        pet_menu.add_command(label=p, command=lambda pet = p: change_pet(pet))
+    m.add_cascade(label="pets", menu=pet_menu)
+    m.add_cascade(label="animations", menu=animation_menu)
+    m.add_command(label="exit", command=animation_window.destroy)
+
     def reset_animation(anim):
         global animation, counter
         animation = anim
         counter = 0
 
     def change_pet(pet):
-        global weights, animation_list, animations, refresh, path
+        global weights, animation_list, animations, refresh, path, m
         weights, animation_list, animations, refresh = get_animations(dir_path + '/pets/' + pet + "/")
         path = dir_path + '/pets/' + pet + "/"
+        animation_menu = tk.Menu()
+        for a in animation_list:
+            animation_menu.add_command(label=a, command=lambda anim = a: reset_animation(anim))
+        m.entryconfigure("animations", menu=animation_menu)
 
     looping = True
     counter = 0
-    m = tk.Menu(animation_window, tearoff=0)
-    animation_menu = tk.Menu()
-    for a in animation_list:
-        animation_menu.add_command(label=a, command=lambda anim = a: reset_animation(anim))
-    m.add_cascade(label="animations", menu=animation_menu)
-    pet_menu = tk.Menu()
-    for p in pets:
-        pet_menu.add_command(label=p, command=lambda pet = p: change_pet(pet))
-    m.add_cascade(label="pets", menu=pet_menu)
-    m.add_command(label="exit", command=animation_window.destroy)
 
     animation_canvas.bind("<Button-3>", do_popup)
     x, y = max_x, max_y
