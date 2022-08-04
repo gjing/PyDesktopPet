@@ -6,6 +6,6 @@ You can compile it with pyinstaller
 
 Supports PNG folders and individual PNGs
 
-# TODO
+### TODO
 Support rotations
 Support threading with tkinte windows
