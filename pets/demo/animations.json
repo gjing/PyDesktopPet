@@ -1,0 +1,9 @@
+{
+  "idle" : {
+    "frames": ["1.png", "2.png"],
+    "weight": 1,
+    "length": 500,
+    "speed": 10,
+    "size": [200,200]
+  }
+}
